@@ -1,0 +1,4 @@
+#define  WIFI_SSID          "YOUR_WIFI_SSID"
+#define  WIFI_SSID_PASSWORD "YOUR_WIFI_KEY"
+#define  STORE_URL          "http://your-server/StoreLogValues.php"
+
