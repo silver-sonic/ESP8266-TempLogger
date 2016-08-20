@@ -1,4 +1,3 @@
-
 /**
  * BasicHTTPClient.ino
  *
@@ -14,8 +13,17 @@
 #include <DHT_U.h>
 #include <Adafruit_Sensor.h>
 
-const char*     ssid = "YOUR-WIFI-SSID";
-const char* password = "YOUR-WIFI-PASSWD";
+#include "ESP8266-TempLogger_Config.h"   // See ESP8266-TempLogger_Config.h.sample
+
+// Define WIFI SSID and Password
+const char*     ssid = WIFI_SSID;
+const char* password = WIFI_SSID_PASSWORD;
+
+// Define Webpage which has the receiver
+String url=STORE_URL;
+
+// How long to sleep after sending a set of values
+const unsigned long deepSleepSeconds = 1800;
 
 // Define Pin for Sensor - I use GPIO2
 #define DHTPIN 2
@@ -30,18 +38,22 @@ const char* password = "YOUR-WIFI-PASSWD";
 DHT dht(DHTPIN, DHTTYPE, 16); 
 
 
+// Some global variables
+
 // Generally, you should use "unsigned long" for variables that hold time
 const long interval = 2000;              // interval at which to read sensor
-const String url="http://YOUR-SERVER-NAME/get_temp.php";
-
 unsigned long previousMillis = 0;        // will store last temp was read
+
 float hum, temp;  // Values read from sensor
 unsigned int counter;
+
+
 
 void setup() {
 
     counter = 0;
 
+    // Short delay after boot... seems needed sometimes
     for(uint8_t t = 4; t > 0; t--) {
         delay(1000);
     }
@@ -49,7 +61,6 @@ void setup() {
     Serial.begin(115200);   Serial.println("");
     WiFi.begin(ssid, password);
     
-
     // Wait for connection
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
@@ -121,8 +132,11 @@ void loop() {
         Serial.println("HTTP End");
     }
   counter++;
-  delay(10000);
-  Serial.println("----- Next Loop -----"); Serial.println("");
+  Serial.println("----- Going to deep slepp for some time -----"); Serial.println("");
+  delay(250); // to make sure any messages from above are really transmitted before going to sleep
+
+  ESP.deepSleep(deepSleepSeconds * 1000 * 1000);
+  delay(100);  //needed to really go into sleep
 }
 
 
