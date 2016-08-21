@@ -137,7 +137,7 @@ void loop() {
         Serial.println("HTTP End");
     }
   counter++;
-  Serial.println("----- Going to deep slepp for some time -----"); Serial.println("");
+  Serial.println("----- Going to deep sleep for some time -----"); Serial.println("");
   delay(250); // to make sure any messages from above are really transmitted before going to sleep
 
   ESP.deepSleep(deepSleepSeconds * 1000 * 1000);
