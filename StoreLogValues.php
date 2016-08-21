@@ -18,6 +18,14 @@ if(isset($_GET["temp"])) { $temp = $_GET["temp"]; } else { $temp = "--"; }
 if(isset($_GET["hum"] )) { $hum  = $_GET["hum"];  } else { $hum  = "--"; }
 if(isset($_GET["vcc"] )) { $vcc  = $_GET["vcc"];  } else { $vcc  = "--"; }
 
+if(isset($_GET["temp"])) { $temp = $_GET["temp"]; } else { $temp = "--"; }
+if(isset($_GET["hum"] )) { $hum  = $_GET["hum"];  } else { $hum  = "--"; }
+
+// a simple log for now
+$logfile = fopen("/home/stefan/www/webroot/temp.heinrichsen.net/temp_log.txt","a");
+fwrite($logfile, date("Y-m-d H-i-s") . ";$timestamp;$temp;$hum;\n");
+fclose($logfile);
+
 // Verify range and format of temperature and huminity
 //
 // Regexp for Temp ([0..9]+.[0..9]+)
