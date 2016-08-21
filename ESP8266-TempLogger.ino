@@ -37,6 +37,8 @@ const unsigned long deepSleepSeconds = 1800;
 // FixMe: What is the third parameter??
 DHT dht(DHTPIN, DHTTYPE, 16); 
 
+// Enable ADC to measure Vcc
+ADC_MODE(ADC_VCC);
 
 // Some global variables
 
@@ -47,6 +49,7 @@ unsigned long previousMillis = 0;        // will store last temp was read
 float hum, temp;  // Values read from sensor
 unsigned int counter;
 
+int vcc;    // Vcc measured by internal ADC; unit should be 1/1024 Volt
 
 
 void setup() {
@@ -101,7 +104,8 @@ void loop() {
     if((WiFi.status() == WL_CONNECTED)) {
 
         gettemperature();
-
+        vcc=ESP.getVcc();
+        
         HTTPClient http;
         Serial.println("HTTP Start");
 
@@ -109,7 +113,8 @@ void loop() {
         url_act += "?temp=";    url_act += temp;
         url_act += "&hum=";     url_act += hum;
         url_act += "&counter="; url_act += counter;
-
+        url_act += "&vcc=";     url_act += vcc;
+        
         Serial.print("URL="); Serial.println(url_act);
         http.begin(url_act); //HTTP-Client
 
