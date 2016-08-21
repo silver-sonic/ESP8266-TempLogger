@@ -1,5 +1,5 @@
 <?php
-include "StoreLogValues_Config.php"
+include "StoreLogValues_Config.php";
 
 $timestamp = time();
 
@@ -26,7 +26,7 @@ fclose($logfile);
 
 // Check battery value and send mail in case of empty/weak battery
 if($vcc<3000) {
-	mail($mail, "Battery low on Temp-Logger", "Hi Admin,\n\nit seems the battery on your TempLogger device is weak. Current voltage is " . ($vcc/1024/3) . ". This should be considered as emtpy battery.\n\nBest regards,\n   Your receiving script.\n");
+	mail($mail, "Battery low on Temp-Logger", "Hi Admin,\n\nit seems the battery on your TempLogger device is weak. Current voltage is " . number_format(($vcc/1024/3), 2) . " V for each battery. This should be considered as emtpy battery.\n\nBest regards,\n   Your receiving script.\n");
 }
 
 // store values to Int (store as tens of a degree 20,5C -> 205)
