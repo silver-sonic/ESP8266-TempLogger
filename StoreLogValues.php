@@ -24,6 +24,11 @@ $logfile = fopen("/home/stefan/www/webroot/temp.heinrichsen.net/temp_log.txt","a
 fwrite($logfile, date("Y-m-d H-i-s") . ";$timestamp;$temp;$hum;$vcc;\n");
 fclose($logfile);
 
+// Check battery value and send mail in case of empty/weak battery
+if($vcc<3000) {
+	mail($mail, "Battery low on Temp-Logger", "Hi Admin,\n\nit seems the battery on your TempLogger device is weak. Current voltage is " . ($vcc/1024/3) . ". This should be considered as emtpy battery.\n\nBest regards,\n   Your receiving script.\n");
+}
+
 // store values to Int (store as tens of a degree 20,5C -> 205)
 // store values to Int (store as tens of percentage 65,3% -> 653)
 
