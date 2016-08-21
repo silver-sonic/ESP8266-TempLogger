@@ -1,0 +1,10 @@
+<?php
+$db_server   = "YOUR-DATABASE-IP";
+$db_database = "YOUR-DATABASE-NAME";
+$db_user     = "YOUR-DATABSE-USER";
+$db_passwd   = "YOUR-DATABSE-PASSWORD";
+
+$hash_key    = "YOUR-SHARED-SECRECT";    // used for hashing, must be the same as on the TempLogger
+
+$mail        = "YOUR-EMAIL-ADDRESS";     // used for alarming  in case of issues during script execution
+?>

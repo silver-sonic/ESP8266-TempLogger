@@ -1,11 +1,5 @@
 <?php
-
-$db_server   = "localhost";
-$db_database = "env_logger";
-$db_user     = "db_user";
-$db_passwd   = "db_passwd";
-
-$hash_key = "123123";  // set shared secret
+include "StoreLogValues_Config.php"
 
 $timestamp = time();
 
