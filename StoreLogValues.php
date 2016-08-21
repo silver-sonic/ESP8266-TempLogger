@@ -12,12 +12,23 @@ $timestamp = time();
 $temp     = ""; // Values should be -200 ... +1000 (divide by 10!)
 $hum      = ""; // Values should be 0 ... 1000 (divide by 10!)
 $sensorID = ""; // ID should be 0...99
+$vcc      = ""; // Raw value of ADC, unit is 1/1024 Volt
+
+if(isset($_GET["temp"])) { $temp = $_GET["temp"]; } else { $temp = "--"; }
+if(isset($_GET["hum"] )) { $hum  = $_GET["hum"];  } else { $hum  = "--"; }
+if(isset($_GET["vcc"] )) { $vcc  = $_GET["vcc"];  } else { $vcc  = "--"; }
 
 // Verify range and format of temperature and huminity
 //
 // Regexp for Temp ([0..9]+.[0..9]+)
 // Regexp for Hum  ([0..9]+.[0..9]+)
 // Regexp for Sensor ([0..9]+)
+// Regexp for Vcc ([0..9]{1-5})
+
+// a simple log for now
+$logfile = fopen("/home/stefan/www/webroot/temp.heinrichsen.net/temp_log.txt","a");
+fwrite($logfile, date("Y-m-d H-i-s") . ";$timestamp;$temp;$hum;$vcc;\n");
+fclose($logfile);
 
 // store values to Int (store as tens of a degree 20,5C -> 205)
 // store values to Int (store as tens of percentage 65,3% -> 653)
@@ -32,7 +43,6 @@ $sensorID = ""; // ID should be 0...99
 
 // Check for errors and create a mail in case of issues
 //
-
 
 echo "OK"
 
